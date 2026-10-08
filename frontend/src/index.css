@@ -1,0 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root{
+  --dark-primary-color: #0F0F0F;
+  --dark-search-bar: #121212;
+  --dark-border-color: #303030;
+  --dark-button-color: #3f3f3f6b;
+  --invert-line: white;
+  --dark-transparent: #0f0f0fc5;
+}
