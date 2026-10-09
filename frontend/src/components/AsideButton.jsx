@@ -1,7 +1,7 @@
 function AsideButton({ title , link, icon}){
     return(
         <a href= {link} className="aside-button bright">
-            <img src={icon} alt="" />
+            <img src={`./icos/${icon}.svg`} alt="" />
             <span>{title}</span>
         </a>
     )

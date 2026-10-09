@@ -4,7 +4,7 @@ function ShortsGroup({videos}){
     return(
         <div className="shorts-group">
             <div className="shorts-title-container">
-                <img src="" alt="Shorts Logo" />
+                <img src="./icos/zap.svg" alt="Shorts Logo" />
                 <h2 className="shorts-container-title">Shorts</h2>
             </div>
             <div className="shorts-list">

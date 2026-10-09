@@ -23,11 +23,11 @@ function Home(){
                 const startShorts = await videoStorage.getStoredVideos("shorts", 50);
 
                 setLayout({
-                    group1: startVideos.slice(0, 8),
-                    group2: startVideos.slice(8, 16),
-                    infinite: startVideos.slice(16),
-                    shorts1: startShorts.slice(0, 10),
-                    shorts2: startShorts.slice(10, 20)
+                    group1: startVideos.slice(0, 4),
+                    group2: startVideos.slice(4, 8),
+                    infinite: startVideos.slice(8),
+                    shorts1: startShorts.slice(0, 8),
+                    shorts2: startShorts.slice(8, 16)
                 });
                 
                 setLoading(false);
