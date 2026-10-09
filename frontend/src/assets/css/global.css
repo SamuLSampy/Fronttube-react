@@ -19,7 +19,11 @@ body {
 }
 
 .bright:hover{
-    background-color: rgba(255, 255, 255, 0.3) !important;
+    background-color: rgba(60, 60, 60) !important;
+}
+
+.bright:active{
+    background-color: rgba(90, 90, 90) !important;
 }
 
 .header-home{
@@ -219,23 +223,15 @@ body {
 }
 
 .use-explode.explode{
-    animation: 0.5s bright-btn forwards;
-    outline: solid 1px transparent;
+    animation: 1s bright-btn forwards !important;
 }
 
-@keyframes bright-btn{
-    0% {
-        background-color: rgba(169, 169, 169, 0.5);
-        outline-color: transparent;
-        filter: brightness(110%);
+@keyframes bright-btn {
+    0%{
+            outline: solid 1px rgba(80, 80, 80, 1);
     }
-    50% {
-        outline-color: rgba(105, 105, 105, 0.5);
-    }
-
     100% {
-        outline-color: transparent;
-        filter: brightness(100%);
+            outline: solid 1px rgba(80, 80, 80, 0);
     }
 }
 

@@ -3,7 +3,7 @@ import convertTime from "../services/time"
 
 function VideoCard({key, title, thumbnail, videoDuration, channelTitle ,channelLogo, views, publishedAt}){
     const durationFormatted = convertTime(videoDuration);
-  
+    console.log(key)
     return(
         <a className="video-card" id={`v${key}`}>
             <div className="video-thumbnail">

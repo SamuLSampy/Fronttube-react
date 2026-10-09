@@ -1,7 +1,6 @@
 import {useState} from 'react'
 import {useNavigate, useLocation} from 'react-router-dom'
-
-import logo from '../../public/img/logo.png'
+import ExplodingButton from './ExplodingButton';
 
 function Header() {
     const [termo, setTermo] = useState("");
@@ -13,11 +12,11 @@ function Header() {
     <header className={`top-bar ${isHome ? 'header-home' : 'header-search'}`}>
       <nav className='nav-up'>
         <div className="left">
-          <button className='bright'>
-            <img src="./icos/menu.svg" alt="Menu" />
-            </button>
+          <ExplodingButton className='bright'>
+            <img src="/icos/menu.svg" alt="Menu" />
+          </ExplodingButton>
           <a href="/">
-            <img src={logo} alt="Youtube" />
+            <img src="/img/logo.png" alt="Youtube" />
             <h1>FrontTube</h1>
           </a>
         </div>
@@ -30,17 +29,17 @@ function Header() {
               </button>
             </form>
           </div>
-          <button className='mic bright'>
+          <ExplodingButton className='mic bright'>
             <img src="./icos/microphone.svg" alt="" />
-          </button>
+          </ExplodingButton>
         </div>
         <div className="right">
-          <button className='btn-create-account'>
+          <ExplodingButton className='btn-create-account'>
             <div>
               <img src="" alt="" />
               <span>Criar</span>
             </div>
-          </button>
+          </ExplodingButton>
         </div>
       </nav>
     </header>
