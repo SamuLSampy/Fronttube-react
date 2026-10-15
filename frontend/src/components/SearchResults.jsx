@@ -3,6 +3,7 @@ import {useSearchParams} from 'react-router-dom'
 
 import api from '../services/api'
 import SearchResultCard from './SearchResultCard';
+import Sentinel from './Sentinel';
 
 function SearchResults(){
     const [searchParams] = useSearchParams();
@@ -53,7 +54,7 @@ function SearchResults(){
         try {
             const data = await api.getVideos({ type: "search", query, pageToken });
             setPageToken(data.nextPageToken);
-            setVideos(prev => [...prev, ...data.videos]); // Adiciona aos existentes
+            setVideos(prev => [...prev, ...data.videos]);
         } catch (e) {
             console.error(e);
         } finally {
@@ -77,6 +78,7 @@ function SearchResults(){
                 />
             ))
             }
+            <Sentinel onIntersect={handleLoadMore}/>
         </div>
     )
 }

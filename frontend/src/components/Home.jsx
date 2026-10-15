@@ -2,6 +2,7 @@ import {useState, useEffect} from 'react';
 import VideoGroup from './VideoGroup';
 import ShortsGroup from './ShortsGroup';
 import TagsBar from './TagsBar';
+import Sentinel from './Sentinel';
 
 import videoStorage from '../services/storage'
 
@@ -14,20 +15,22 @@ function Home(){
         shorts2: []
     });
 
+    const [videoList, setVideoList] = useState([])
+
     const [loading, setLoading] = useState(true);
   
     useEffect(() => {
         const montarTelaInicial = async () => {
             try {
-                const startVideos = await videoStorage.getStoredVideos("trending", 50);
-                const startShorts = await videoStorage.getStoredVideos("shorts", 50);
+                let videoList = await videoStorage.getStoredVideos("trending", 8);
+                let shortList = await videoStorage.getStoredVideos("shorts", 16);
 
                 setLayout({
-                    group1: startVideos.slice(0, 4),
-                    group2: startVideos.slice(4, 8),
-                    infinite: startVideos.slice(8),
-                    shorts1: startShorts.slice(0, 8),
-                    shorts2: startShorts.slice(8, 16)
+                    group1: videoList.slice(0, 4),
+                    group2: videoList.slice(4, 8),
+                    infinite: videoList.slice(8),
+                    shorts1: shortList.slice(0, 8),
+                    shorts2: shortList.slice(8, 16)
                 });
                 
                 setLoading(false);
@@ -35,8 +38,22 @@ function Home(){
                 console.error("Erro ao carregar vídeos iniciais", error);
             }
         };
+
         montarTelaInicial();
     }, []); 
+
+    const loadMoreVideos = async ()=>{
+        try{
+            const newVideos = await videoStorage.getStoredVideos("trending", 20);
+            if(newVideos.lenght > 0){
+                setLayout(prevVideos => ({...prevVideos, infinite: [...prevVideos.infinite, ...newVideos]}))
+                console.log("Vídeos Carregados!")
+            }
+        } catch(e){
+            throw new Error("Falha ao carregar vídeos: " + e)
+        }
+    }
+
     return (
         <>
         <section className='tags-section'>
@@ -48,7 +65,8 @@ function Home(){
             <ShortsGroup videos={layout.shorts1} />
             <VideoGroup videos={layout.group2} />
             <ShortsGroup videos={layout.shorts2} />
-
+            <VideoGroup videos={layout.infinite}/>
+            {!loading && <Sentinel onIntersect={loadMoreVideos}/>}
         </div>
         </>
     );
