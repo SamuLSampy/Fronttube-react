@@ -1,7 +1,7 @@
-function ShortsCard({key, title, thumbnail, views}){
+function ShortsCard({id, title, thumbnail, views}){
     return(
         <>
-        <a className="short-card" id={key}>
+        <a className="short-card" id={id}>
               <div className="short-thumbnail">
                 <img src={thumbnail} alt="thumbnail"  />
               </div>

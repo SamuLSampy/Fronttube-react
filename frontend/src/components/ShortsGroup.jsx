@@ -10,7 +10,8 @@ function ShortsGroup({videos}){
             <div className="shorts-list">
                 {videos.map(video =>(
                     <ShortsCard 
-                        key={video.id} 
+                        key={video.id}
+                        id={video.id}
                         title={video.title}
                         thumbnail={video.thumbnail}
                         views={video.views}/>

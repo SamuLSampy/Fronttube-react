@@ -6,6 +6,7 @@ function VideoGroup({videos}){
             {videos.map(video =>(
                 <VideoCard 
                     key={video.id} 
+                    id={video.id} 
                     title={video.title}
                     thumbnail={video.thumbnail}
                     videoDuration={video.duration}

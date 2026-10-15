@@ -16,7 +16,7 @@ function SearchResultCard({ id, title, thumbnail, videoDuration, channelTitle, c
                 </div>
 
                 <div className="result-channel">
-                    <img src={channelLogo || ''} alt="Channel Logo" />
+                    <img src={channelLogo} alt="Channel Logo" />
                     <span className="result-channel-name">{channelTitle}</span>
                 </div>
 

@@ -36,7 +36,6 @@ function Header() {
         <div className="right">
           <ExplodingButton className='btn-create-account'>
             <div>
-              <img src="" alt="" />
               <span>Criar</span>
             </div>
           </ExplodingButton>

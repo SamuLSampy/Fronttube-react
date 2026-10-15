@@ -1,11 +1,10 @@
 import { useEffect } from "react"
 import convertTime from "../services/time"
 
-function VideoCard({key, title, thumbnail, videoDuration, channelTitle ,channelLogo, views, publishedAt}){
+function VideoCard({id, title, thumbnail, videoDuration, channelTitle ,channelLogo, views, publishedAt}){
     const durationFormatted = convertTime(videoDuration);
-    console.log(key)
     return(
-        <a className="video-card" id={`v${key}`}>
+        <a className="video-card" id={`v${id}`}>
             <div className="video-thumbnail">
               <img src={thumbnail} alt="Thumbnail" />
               <span className="video-duration">{durationFormatted.concat}</span>
