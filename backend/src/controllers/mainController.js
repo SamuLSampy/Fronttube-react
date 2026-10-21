@@ -6,7 +6,6 @@ const API_KEY = process.env.SECRET_API_KEY;
 const getTrending = async (request, reply) => {
     try {
         const config = request.query;
-        console.log(config)
         const data = await videoServices.getVideos(API_KEY, config.type, config.quant, config.pageToken);
         return data;
     } catch(e) {
@@ -25,7 +24,12 @@ const getSearch = async (request, reply) => {
     }
 }
 
+const ping = async(request, reply) => {
+    reply.code(200).send({status: "ok"})
+}
+
 export default {
     getTrending,
-    getSearch
+    getSearch,
+    ping
 }

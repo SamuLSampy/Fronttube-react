@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+// Busca vídeos aleatórios
 const getVideos = async (API_KEY, type, quant, pageToken = null) => {
     let url;
     let response;
@@ -52,6 +53,7 @@ const getVideos = async (API_KEY, type, quant, pageToken = null) => {
     }
 }
 
+// Pesquisa por lista de vídeos
 const getSearch = async (API_KEY, query, quant, pageToken = null) => {
     let response
     try{
@@ -70,11 +72,12 @@ const getSearch = async (API_KEY, query, quant, pageToken = null) => {
             nextPageToken: response.data.nextPageToken
         }
     } catch(e){
-        console.log("Erro na requisição: ", e)
+        console.error("Erro na requisição: ", e)
         throw e
     }
 }
 
+// Retorna informações extras que não são retornadas na API padrão de busca por vídeos
 const getVideoExtras = async (API_KEY, videos) => {
     const videoIds = videos.map(v => v.id.videoId || v.id).join(',');
     const channelIds = videos.map(v => v.snippet.channelId).join(',');
@@ -96,7 +99,6 @@ const getVideoExtras = async (API_KEY, videos) => {
         const vStat = videoDetails.data.items.find(v => v.id === vId);
         const cStat = channelDetails.data.items.find(c => c.id === video.snippet.channelId);
 
-        // Pegar a melhor Thumbnail possível
         const thumbs = video.snippet.thumbnails;
         const bestThumbnail = (thumbs.maxres || thumbs.standard || thumbs.high || thumbs.medium || thumbs.default).url
 
