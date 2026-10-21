@@ -4,6 +4,7 @@ import {useSearchParams} from 'react-router-dom'
 import api from '../services/api'
 import SearchResultCard from './SearchResultCard';
 import Sentinel from './Sentinel';
+import EndList from './EndList';
 
 function SearchResults(){
     const [searchParams] = useSearchParams();
@@ -12,6 +13,7 @@ function SearchResults(){
     const [pageToken, setPageToken] = useState(null)
     const [videos, setVideos] = useState([])
     const [loading, setLoading] = useState(false)
+    const [hasMore, setHasMore] = useState(true)
 
     useEffect(()=>{
         if (!query){
@@ -35,6 +37,7 @@ function SearchResults(){
             }
             catch(e){
                 if(!ignore) console.error(e)
+                setHasMore(false)
             } finally{
                 if(!ignore) setLoading(false)
             }
@@ -48,7 +51,7 @@ function SearchResults(){
     }, [query])
     
     const handleLoadMore = async () => {
-        if (!pageToken || loading || !query) return;
+        if (!pageToken || loading || !query || !hasMore) return;
 
         setLoading(true);
         try {
@@ -79,6 +82,7 @@ function SearchResults(){
             ))
             }
             <Sentinel onIntersect={handleLoadMore}/>
+            {!hasMore && <EndList/>}
         </div>
     )
 }

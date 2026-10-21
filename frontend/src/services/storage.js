@@ -1,5 +1,7 @@
 import apiConnect from './api'
 
+let loading = false
+
 // Armazena vídeos para evitar novas requisições
 let bufferList ={
     trending: [],
@@ -14,19 +16,31 @@ let nextToken ={
     search: null
 }
 
+// Impede de mais vídeos serem buscados se já estiverem no fim da lista
+let hasMore = {
+    trending: true,
+    shorts: true,
+    search: true
+}
+
 // Retorna vídeos armazenados
 async function getStoredVideos(type, quant = 12){
-    if(!bufferList[type]) throw new Error(`Typo específicado inválido: ${type}`)
+    if(!bufferList[type]) throw new Error(`Tipo específicado inválido: ${type}`)
+    if(loading) return []
+    if(!hasMore[type]) return {endList: true}
+
+    loading = true
     let storedVideos = bufferList[type];
 
     if(storedVideos.length < quant){
         try{
             await refillBuffer(type)
         } catch(e){
-            console.error("Falha ao alimentar Buffer de vídeos: " + e)
+            throw e
         }
     }
-
+    loading = false
+    
     if(quant >= 0){
         return storedVideos.splice(0, quant)
     } else {
@@ -34,20 +48,27 @@ async function getStoredVideos(type, quant = 12){
     }
 }
 
+// Busca por mais vídeos pela API
 async function refillBuffer(type) {
     if(!bufferList[type]) throw new Error(`Tipo específicado inválido: ${type}`)
-
     let currentPageToken = nextToken[type];
     let storedVideos = bufferList[type];
 
+    console.log(currentPageToken)
+
     try{
-        const results = await apiConnect.getVideos({type, quant: 50, PageToken: currentPageToken})
+        const results = await apiConnect.getVideos({type, quant: 50, pageToken: currentPageToken})
         if(results.videos){
+            console.log("Token Retornado:" + results.nextPageToken)
             nextToken[type] = results.nextPageToken
             storedVideos.push(...results.videos)
         }
+        if (!results.nextPageToken && hasMore[type]){
+            hasMore[type] = false;
+            throw new Error("nextPageToken retornou vazia. Vídeos chegaram ao fim.")
+        }
     } catch(e){
-        console.error("Falha ao retornar vídeos: " + e)
+        throw e
     } 
 }
 

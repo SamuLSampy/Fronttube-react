@@ -1,5 +1,6 @@
 import axios from "axios"
 
+// Se conecta com o backend para buscar vídeos
 async function getVideos({ type, quant = 50, query = null, pageToken }) {
   try {
     let url = "";
@@ -7,8 +8,9 @@ async function getVideos({ type, quant = 50, query = null, pageToken }) {
 
     switch (type) {
       case "trending":
+        console.log(pageToken)
         url = "/api/get/trending";
-        params = { type, quant };
+        params = { type, quant, pageToken};
         break;
 
       case "shorts":

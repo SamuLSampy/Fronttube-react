@@ -1,8 +1,8 @@
 import VideoCard from "./VideoCard";
 
-function VideoGroup({videos}){
+function VideoGroup({videos, className}){
     return(
-        <div className="video-group">
+        <div className={`video-group ${className}`}>
             {videos.map(video =>(
                 <VideoCard 
                     key={video.id} 

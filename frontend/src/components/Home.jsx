@@ -3,6 +3,7 @@ import VideoGroup from './VideoGroup';
 import ShortsGroup from './ShortsGroup';
 import TagsBar from './TagsBar';
 import Sentinel from './Sentinel';
+import EndList from './EndList';
 
 import videoStorage from '../services/storage'
 
@@ -15,9 +16,13 @@ function Home(){
         shorts2: []
     });
 
-    const [videoList, setVideoList] = useState([])
-
     const [loading, setLoading] = useState(true);
+    const [hasMore, setHasMore] = useState(
+        {
+            long: true,
+            short: true
+        }
+    )
   
     useEffect(() => {
         const montarTelaInicial = async () => {
@@ -45,12 +50,13 @@ function Home(){
     const loadMoreVideos = async ()=>{
         try{
             const newVideos = await videoStorage.getStoredVideos("trending", 20);
-            if(newVideos.lenght > 0){
+            if(newVideos.length > 0){
                 setLayout(prevVideos => ({...prevVideos, infinite: [...prevVideos.infinite, ...newVideos]}))
                 console.log("Vídeos Carregados!")
             }
         } catch(e){
-            throw new Error("Falha ao carregar vídeos: " + e)
+            setHasMore(prevConfig => ({...prevConfig, long: false}))
+            console.error("Falha ao carregar vídeos: " + e)
         }
     }
 
@@ -65,8 +71,9 @@ function Home(){
             <ShortsGroup videos={layout.shorts1} />
             <VideoGroup videos={layout.group2} />
             <ShortsGroup videos={layout.shorts2} />
-            <VideoGroup videos={layout.infinite}/>
+            <VideoGroup videos={layout.infinite} className="infinite-group"/>
             {!loading && <Sentinel onIntersect={loadMoreVideos}/>}
+            {!hasMore.long && <EndList/>}
         </div>
         </>
     );

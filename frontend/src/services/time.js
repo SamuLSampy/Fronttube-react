@@ -1,3 +1,4 @@
+// Converte o formato de tempo retornado pela API para algo legível
 function convertTime(duration) {
     const match = duration.match(/PT(\d+H)?(\d+M)?(\d+S)?/)
 
