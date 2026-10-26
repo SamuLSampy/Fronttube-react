@@ -3,9 +3,16 @@ import {useNavigate, useLocation} from 'react-router-dom'
 import ExplodingButton from './ExplodingButton';
 
 function Header() {
-    const [termo, setTermo] = useState("");
+  const [termo, setTermo] = useState("");
   const navigate = useNavigate();
   const location = useLocation(); 
+
+  const handleSearch = (e) => {
+    e.preventDefault()
+    if(termo.trim()){
+      navigate(`/results?search_query=${encodeURIComponent(termo)}`)
+    }
+  }
 
   const isHome = location.pathname === "/";
   return (
@@ -22,9 +29,9 @@ function Header() {
         </div>
         <div className="center">
           <div className='search-wrapper'>
-            <form action="/results">
-              <input type="text" className="search-bar" placeholder='Pesquisar' name='search_query'/>
-              <button className="search-btn">
+            <form onSubmit={handleSearch}>
+              <input type="text" className="search-bar" placeholder='Pesquisar' name='search_query' value={termo} onChange={(e) => setTermo(e.target.value)}/>
+              <button className="search-btn" type='submit'>
                 <img src="./icos/search.svg" alt="" />
               </button>
             </form>
